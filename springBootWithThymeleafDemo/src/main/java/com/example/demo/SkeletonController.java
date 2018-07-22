@@ -21,7 +21,7 @@ public class SkeletonController {
 	public String welcome(Map<String, Object> model) {
 		model.put("title", "Bilal's Spring Boot with Thymeleaf Title");
 		model.put("header", "Bilal's page Header");
-		model.put("message", "Hello Bilal");
+		model.put("message", "Hello Bilal.. how you doing today");
 		return "views/welcome";
 	}
 
