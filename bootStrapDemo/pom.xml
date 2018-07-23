@@ -39,7 +39,28 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- to be able to use bootstrap for UI in html -->
+		<dependency>
+    		<groupId>org.webjars</groupId>
+    		<artifactId>bootstrap</artifactId>
+    		<version>3.3.4</version>
+		</dependency>
+		
+		<!-- Jquery is required by bootstrap -->
+		<dependency>
+    		<groupId>org.webjars</groupId>
+    		<artifactId>jquery</artifactId>
+    		<version>1.11.3</version>
+    	</dependency>
+		
+		<!-- allow for hot code swap -->
+		<dependency>
+        	<groupId>org.springframework.boot</groupId>
+        	<artifactId>spring-boot-devtools</artifactId>
+    	</dependency>
 	</dependencies>
+	
 
 	<build>
 		<plugins>
