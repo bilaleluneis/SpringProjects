@@ -6,25 +6,17 @@
 
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<title th:text="${title}">Default Title</title>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-</head>
-<body>
 
-	<div class="container">
-		<div class="starter-template">
-			<h1 th:text="${header}">Default Header</h1>
-			<h2>
-				<span th:text="'Message: ' + ${message}"></span>
-			</h2>
-		</div>
-	</div>
-	<!-- /.container -->
-
-	<script type="text/javascript" 
-			src="webjars/bootstrap/3.3.7/js/bootstrap.min.js">
-	</script>
-
-</body>
+	<head>
+		<title th:text="${title}">Default Title When thymeLeaf property is Empty</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	
+	<body>
+		<form method="post" action="/welcome">
+			<input type="text" name="user_name"/>
+			<button type="submit"> Type Your Name</button>
+		</form>
+	</body>
+	
 </html>

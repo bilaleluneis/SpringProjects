@@ -1,9 +1,9 @@
 package com.example.demo;
 
-import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -16,14 +16,38 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class SkeletonController {
 	
-	
-	@RequestMapping(value="/")
-	public String welcome(Map<String, Object> model) {
-		model.put("title", "Bilal's Spring Boot with Thymeleaf Title");
-		model.put("header", "Bilal's page Header");
-		model.put("message", "Hello Bilal.. how you doing today");
+	/**
+	 * gets called when hitting localhost:8080/ and getting that page
+	 * @param model
+	 * @return src/main/resources/templates/views/welcome.html page
+	 */
+	@RequestMapping( value="/" , method = RequestMethod.GET )
+	public String index ( Model model ) {
 		return "views/welcome";
 	}
-
 	
+	/**
+	 * gets called when hitting localhost:8080/welcome
+	 * @param model
+	 * @return src/main/resources/templates/views/welcome.html page
+	 */
+	@RequestMapping( value="/welcome" , method = RequestMethod.GET )
+	public String onGetWelcome ( Model model ) {
+		return "views/welcome";
+	}
+	
+	/**
+	 * gets called when user submits form on localhost:8080/welcome
+	 * @param model
+	 * @return src/main/resources/templates/views/welcome.html page
+	 */
+	@RequestMapping( value="/welcome" , method = RequestMethod.POST )
+	public String onPostWelcome ( HttpServletRequest request, Model model ) {
+		
+		String userName = request.getParameter("user_name");
+		model.addAttribute("message", "Hello " + userName);
+		return "views/result";
+		
+	}
+
 }
