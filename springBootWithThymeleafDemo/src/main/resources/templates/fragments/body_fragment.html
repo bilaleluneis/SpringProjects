@@ -1,0 +1,27 @@
+<!--/* 
+	@author: Bilal El Uneis
+	@since: July 2018
+	simple fragment file that will contain body elements
+*/-->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body th:fragment = "greeting">
+
+	<div class="container">
+		<div class="starter-template">
+			<h1 th:text="${header}">Default Header</h1>
+			<h2>
+				<span th:text="'Message: ' + ${message}">Default Message</span>
+			</h2>
+		</div>
+	</div>
+
+	<script type="text/javascript" 
+			src="webjars/bootstrap/3.3.7/js/bootstrap.min.js">
+	</script>
+
+</body>
+
+</html>
