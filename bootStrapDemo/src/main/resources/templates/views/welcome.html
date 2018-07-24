@@ -1,0 +1,36 @@
+
+<!--/* 
+	@author: Bilal El Uneis
+	@since: July 2018
+	simple initial page to try out thymeleaf, 
+	bootstrap and Jquery integration setup initially
+*/-->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<!-- load up bootstrap css from bootstrap jar -->
+		<link rel="stylesheet" href="/webjars/bootstrap/3.3.4/css/bootstrap.min.css" />
+		
+		<!-- load up jquery from jquery jar -->
+		<script src="/webjars/jquery/1.11.3/jquery.min.js"></script>
+		
+		<!-- load up bootstrap js from bootstrap jar-->
+        <script src="/webjars/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        
+		<title th:text="${title}">Default Title When thymeLeaf property is Empty</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	
+	<body>
+		<div class="container">
+			<br/>
+			<div class="alert alert-success">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+				<strong>Success!</strong> configuration Test looks good!.
+			</div>
+		</div>
+	</body>
+	
+</html>
