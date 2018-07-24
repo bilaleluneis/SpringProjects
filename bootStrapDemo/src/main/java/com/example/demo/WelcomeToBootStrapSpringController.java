@@ -21,6 +21,7 @@ public class WelcomeToBootStrapSpringController {
 	 */
 	@RequestMapping( value="/" , method = RequestMethod.GET )
 	public String index ( Model model ) {
+		model.addAttribute("message", "Configuration (thymeleaf, bootstrap and jQuery) looks all good!");
 		return "views/welcome";
 	}
 
