@@ -1,0 +1,25 @@
+<!--/* 
+	@author: Bilal El Uneis
+	@since: July 2018
+	simple fragment file that will include the bootstrap, jquery
+	into html file calling it
+*/-->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment = "head (title)">
+		<!-- load up bootstrap css from bootstrap jar -->
+		<link rel="stylesheet" href="/webjars/bootstrap/3.3.4/css/bootstrap.min.css" />
+		
+		<!-- load up jquery from jquery jar -->
+		<script src="/webjars/jquery/1.11.3/jquery.min.js"></script>
+		
+		<!-- load up bootstrap js from bootstrap jar-->
+        <script src="/webjars/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        
+		<title th:text="${title}">Default Title When thymeLeaf property is Empty</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+</html>

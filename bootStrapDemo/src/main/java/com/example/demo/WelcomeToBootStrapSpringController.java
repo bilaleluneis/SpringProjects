@@ -24,5 +24,15 @@ public class WelcomeToBootStrapSpringController {
 		model.addAttribute("message", "Configuration (thymeleaf, bootstrap and jQuery) looks all good!");
 		return "views/welcome";
 	}
+	
+	/**
+	 * gets called when hitting localhost:8080/ and getting that page
+	 * @param model
+	 * @return src/main/resources/templates/views/collapsables.html page
+	 */
+	@RequestMapping( value="/collapsables" , method = RequestMethod.GET )
+	public String collapsablesExamples ( Model model ) {
+		return "views/collapsables";
+	}
 
 }

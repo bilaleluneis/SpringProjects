@@ -1,0 +1,45 @@
+<!--/* 
+	@author: Bilal El Uneis
+	@since: July 2018
+	simple fragment file that will collapsable div elements
+*/-->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="row_plain (id,label,value,helpText)">
+	<div class="row">
+		<div class="col-sm-4" data-toggle="collapse"
+			 th:attr="data-target='#'+${id}">
+			<p th:text="${label}"></p>
+		</div>
+		<div class="col-sm-4">
+			<span th:text="${value}"></span>
+		</div>
+	</div>
+	<div class="row collapse" th:attr="id=${id}">
+		<div class="well col-sm-12">
+			<p th:text="${helpText}"></p>
+		</div>
+	</div>
+</div>
+
+<div th:fragment="row_with_help_icon (id,label,value,helpText)">
+	<div class="row">
+		<div class="col-sm-4">
+			<p th:text="${label}" th:remove = "tag"></p>
+			<a class="glyphicon glyphicon-question-sign" data-toggle="collapse"
+			   th:attr="data-target='#'+${id}"></a>
+		</div>
+		<div class="col-sm-4">
+			<span th:text="${value}"></span>
+		</div>
+	</div>
+	<div class="row collapse" th:attr="id=${id}">
+		<div class="well col-sm-12">
+			<p th:text="${helpText}"></p>
+		</div>
+	</div>
+</div>
+
+</html>

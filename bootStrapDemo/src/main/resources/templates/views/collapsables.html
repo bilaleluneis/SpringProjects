@@ -1,0 +1,27 @@
+
+<!--/* 
+	@author: Bilal El Uneis
+	@since: July 2018
+	
+	Colapsable elements examples
+*/-->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace = "fragments/head :: head (title='Collapsables Demo')"/>
+		
+	<body>
+	<div class="container">
+	
+		<div th:replace = "fragments/collapsable_div :: 
+						   row_plain (id='colapse_one', label='Original Credit Amount', 
+						   value='$3000',helpText='Help Information you requested !')"></div>
+						  
+		<div th:replace = "fragments/collapsable_div :: 
+						   row_with_help_icon (id='colapse_two', label='Annual Amount Owed', 
+						   value='$10,000',helpText='Help Information you requested again!!')"></div>
+	</div>
+	</body>
+	
+</html>
