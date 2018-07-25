@@ -1,5 +1,8 @@
 package com.example.demo;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +35,15 @@ public class WelcomeToBootStrapSpringController {
 	 */
 	@RequestMapping( value="/collapsables" , method = RequestMethod.GET )
 	public String collapsablesExamples ( Model model ) {
+		
+		List<Movie> movieList = Arrays.asList(
+					new Movie("theRock","The Rock 1997:","Very Cool Movie about Escaping Alcetraz"),
+					new Movie("armagadon","Armagadon 1996:","Very Cool Movie about saving Earth"),
+					new Movie("savingRyan","Saving Private Ryan:","Very Cool Movie about saving a Soldier")
+					);
+		
+		model.addAttribute("movieList", movieList);
+		
 		return "views/collapsables";
 	}
 

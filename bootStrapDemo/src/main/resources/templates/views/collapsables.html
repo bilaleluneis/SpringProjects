@@ -15,12 +15,15 @@
 	<div class="container">
 	
 		<div th:replace = "fragments/collapsable_div :: 
-						   row_plain (id='colapse_one', label='Original Credit Amount', 
+						   row_plain (id='colapse_one', label='Some Label:', 
 						   value='$3000',helpText='Help Information you requested !')"></div>
 						  
 		<div th:replace = "fragments/collapsable_div :: 
-						   row_with_help_icon (id='colapse_two', label='Annual Amount Owed', 
+						   row_plain_with_help_icon (id='colapse_two', label='Some Other Label:', 
 						   value='$10,000',helpText='Help Information you requested again!!')"></div>
+						   
+		<div th:replace = "fragments/collapsable_div :: 
+						   row_list (list='movieList', groupId='movieGroup')"></div>
 	</div>
 	</body>
 	
