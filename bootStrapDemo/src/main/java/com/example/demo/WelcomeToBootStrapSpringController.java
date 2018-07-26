@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class WelcomeToBootStrapSpringController {
 	
 	/**
-	 * gets called when hitting localhost:8080/ and getting that page
+	 * gets called when hitting localhost:8080/
 	 * @param model
 	 * @return src/main/resources/templates/views/welcome.html page
 	 */
@@ -29,7 +29,7 @@ public class WelcomeToBootStrapSpringController {
 	}
 	
 	/**
-	 * gets called when hitting localhost:8080/ and getting that page
+	 * gets called when hitting localhost:8080/collapsables
 	 * @param model
 	 * @return src/main/resources/templates/views/collapsables.html page
 	 */
@@ -45,6 +45,16 @@ public class WelcomeToBootStrapSpringController {
 		model.addAttribute("movieList", movieList);
 		
 		return "views/collapsables";
+	}
+	
+	/**
+	 * gets called when hitting localhost:8080/general
+	 * @param model
+	 * @return src/main/resources/templates/views/general.html page
+	 */
+	@RequestMapping( value="/general" , method = RequestMethod.GET )
+	public String textExamples ( Model model ) {	
+		return "views/general";
 	}
 
 }

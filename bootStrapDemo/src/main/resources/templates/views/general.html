@@ -1,0 +1,83 @@
+
+<!--/* 
+	@author: Bilal El Uneis
+	@since: July 2018
+	
+	general examples of boot strap features
+*/-->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head th:replace = "fragments/head :: head (title='Text Demo')"/>
+
+	<body>
+		<div class="container">
+				
+				<!-- float text on left and right at same line -->
+				<div class="pull-left"><h1> <small>Text to the Left</small></h1></div>
+				<div class="pull-right"><h1> <small>Text to the Right</small></h1></div>
+				<div class="clearfix"></div> <!--/*so you can have <hr> show under*/-->
+				<hr>
+				
+				<!-- 
+				Grids: notice you can put them in their own container div.
+				keep in mind that bootstrap grid system is 12 columns, so when
+				you combine columns in a row , make sure total is 12 
+				-->
+				<div class="container">
+					<div class="row">
+						<!-- 
+						notice col-md sm and xs has same values.
+						this will force the use of that layout
+						on all screen sizes. otherwise at some point
+						the content of next column will end up under
+						instead of next.
+						 -->
+						<div class="col-md-8 col-sm-8 col-xs-8">
+							<b>Main content goes here</b>
+						</div>
+						<div class="col-md-4 col-sm-4 col-xs-4">
+							<p>Side content goes here</p>
+						</div>
+					</div>
+				</div>
+				<hr>
+				
+				<!-- Jumbotron inside its own container with pushing text to side -->
+				<div class="jumbotron">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-8 col-sm-8 col-xs-8">
+								<b>Main content goes here</b>
+							</div>
+							<div class="col-md-4 col-sm-4 col-xs-4">
+								<p>Side content goes here</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				
+				<!-- using wells -->
+				<div class="well well-sm">
+					<div class="container">
+						<div class="row">
+							<div class="col-md-8 col-sm-8 col-xs-8">
+								<b>Main content goes here (wells)</b>
+							</div>
+							<div class="col-md-4 col-sm-4 col-xs-4">
+								<p>Side content goes here (wells)</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr>
+				
+				<!-- Alerts -->
+				<div class="alert alert-success" role ="alert">Sucess!</div>
+				<div class="alert alert-danger" role ="alert">ERROR!</div>
+	</div>
+	</body>
+
+</html>
