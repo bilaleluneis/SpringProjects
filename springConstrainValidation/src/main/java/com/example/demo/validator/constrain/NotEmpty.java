@@ -1,4 +1,4 @@
-package com.example.demo.validator;
+package com.example.demo.validator.constrain;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -8,6 +8,13 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+
+import com.example.demo.validator.constrain.impl.NotEmptyValidatorImpl;
+
+/**
+ * @author Bilal El Uneis (bilaleluneis@gmail.com)
+ * @since Feb 2019
+ */
 
 @Documented
 @Constraint(validatedBy = NotEmptyValidatorImpl.class)

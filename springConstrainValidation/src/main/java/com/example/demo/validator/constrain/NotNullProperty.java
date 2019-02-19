@@ -1,4 +1,4 @@
-package com.example.demo.validator;
+package com.example.demo.validator.constrain;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -8,13 +8,22 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
+import javax.validation.ReportAsSingleViolation;
+
+import com.example.demo.validator.constrain.impl.NotNullPropertyValidatorImpl;
+
+/**
+ * @author Bilal El Uneis (bilaleluneis@gmail.com)
+ * @since Feb 2019
+ */
 
 @Documented
-@Constraint(validatedBy = NoSpecialCharsValidatorImpl.class)
+@Constraint(validatedBy = NotNullPropertyValidatorImpl.class)
 @Target({ ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface NoSpecialChars {
-    String message() default "Field cannot contain special chars !";
+@ReportAsSingleViolation
+public @interface NotNullProperty {
+    String message() default "Field cannot be NULL !";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

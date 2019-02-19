@@ -16,6 +16,11 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import com.example.demo.bean.BeanWithAnnotationValidation;
 import com.example.demo.controller.MainController;
 
+/**
+ * @author Bilal El Uneis (bilaleluneis@gmail.com)
+ * @since Feb 2019
+ */
+
 public class MainControllerUnitTest {
 	
 	private MockMvc mockMvc;
@@ -39,7 +44,7 @@ public class MainControllerUnitTest {
 		
 		this.mockMvc.perform(MockMvcRequestBuilders.post("/main")
 				.accept(MediaType.TEXT_HTML)
-			    .flashAttr(beanName, new BeanWithAnnotationValidation("$duh")))
+			    .flashAttr(beanName, new BeanWithAnnotationValidation("$duh","","","")))
 			    .andExpect(model().attributeHasFieldErrorCode(beanName, propertyNameOnBean, noSpecialCharValid))
 			    .andExpect(model().errorCount(1))
 			    .andExpect(view().name("errorPage"))

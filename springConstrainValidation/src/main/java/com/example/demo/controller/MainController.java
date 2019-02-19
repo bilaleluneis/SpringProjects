@@ -11,12 +11,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.bean.BeanWithAnnotationValidation;
 
+/**
+ * @author Bilal El Uneis (bilaleluneis@gmail.com)
+ * @since Feb 2019
+ */
+
 @Controller
 public class MainController {
 
 	@GetMapping("/main")
     public String loadFormPage(Model m) {
-        m.addAttribute("bean", new BeanWithAnnotationValidation("validName"));
+        m.addAttribute("bean", new BeanWithAnnotationValidation("validName","","",""));
         return "inputPage";
     }
 	
