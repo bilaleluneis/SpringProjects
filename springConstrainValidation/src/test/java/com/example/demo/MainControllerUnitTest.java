@@ -27,7 +27,8 @@ public class MainControllerUnitTest {
 	
 	@Before
 	public void setup() {
-		this.mockMvc = MockMvcBuilders.standaloneSetup(new MainController()).build();
+		MainController controller = new MainController();
+		this.mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 	}
 	
 	@Test
@@ -46,7 +47,7 @@ public class MainControllerUnitTest {
 				.accept(MediaType.TEXT_HTML)
 			    .flashAttr(beanName, new BeanWithAnnotationValidation("$duh","","","")))
 			    .andExpect(model().attributeHasFieldErrorCode(beanName, propertyNameOnBean, noSpecialCharValid))
-			    .andExpect(model().errorCount(1))
+			    .andExpect(model().errorCount(4))
 			    .andExpect(view().name("errorPage"))
 			    .andExpect(status().isOk())
 			    .andDo(print());

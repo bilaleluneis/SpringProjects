@@ -24,7 +24,7 @@ import org.hibernate.validator.internal.util.TypeResolutionHelper;
 import org.hibernate.validator.spi.time.TimeProvider;
 import org.hibernate.validator.spi.valuehandling.ValidatedValueUnwrapper;
 
-import com.example.demo.validator.impl.CustomValidatorImpl;
+import com.example.demo.validator.impl.CustomValidator;
 
 /**
  * @author Bilal El Uneis (bilaleluneis@gmail.com)
@@ -102,18 +102,16 @@ public class CustomValidatorFactoryImpl extends ValidatorFactoryImpl {
 			beanMetaDataManager = beanMetaDataManagerMap.get( parameterNameProvider );
 		}
 
-		return new CustomValidatorImpl(
-				constraintValidatorFactory,
-				messageInterpolator,
-				traversableResolver,
-				beanMetaDataManager,
-				parameterNameProvider,
-				timeProvider,
-				typeResolutionHelper,
-				validatedValueHandlers,
-				constrainValidatorManager,
-				failFast
-		);
+		return new CustomValidator(	constraintValidatorFactory,
+									messageInterpolator,
+									traversableResolver,
+									beanMetaDataManager,
+									parameterNameProvider,
+									timeProvider,
+									typeResolutionHelper,
+									validatedValueHandlers,
+									constrainValidatorManager,
+									failFast);
 		
 	}
 	

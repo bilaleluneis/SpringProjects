@@ -15,10 +15,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.example.demo.bean.BeanWithAnnotationValidation;
-import com.example.demo.group.sequence.GroupSequence;
 import com.example.demo.group.sequence.One;
 import com.example.demo.group.sequence.Two;
-import com.example.demo.validator.impl.CustomValidatorImpl;
 import com.example.demo.validator.provider.impl.CustomValidatorProvider;
 import com.example.demo.validator.provider.resolver.impl.CustomValidationProviderResolver;
 
@@ -51,7 +49,7 @@ public class BeanWithAnnotationValidationTest {
 		Set<ConstraintViolation<BeanWithAnnotationValidation>> violations;
 		try {
 			
-			violations = ((CustomValidatorImpl)validator).customValidate(bean, new Class<?>[] {One.class, Two.class});
+			violations = validator.validate(bean, new Class<?>[] {One.class, Two.class});
 			for(ConstraintViolation<BeanWithAnnotationValidation> violation : violations) {
 				System.out.println(violation.getMessage());
 			}
