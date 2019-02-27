@@ -47,7 +47,7 @@ public class MainControllerUnitTest {
 				.accept(MediaType.TEXT_HTML)
 			    .flashAttr(beanName, new BeanWithAnnotationValidation("$duh","","","")))
 			    .andExpect(model().attributeHasFieldErrorCode(beanName, propertyNameOnBean, noSpecialCharValid))
-			    .andExpect(model().errorCount(4))
+			    .andExpect(model().errorCount(1))
 			    .andExpect(view().name("errorPage"))
 			    .andExpect(status().isOk())
 			    .andDo(print());

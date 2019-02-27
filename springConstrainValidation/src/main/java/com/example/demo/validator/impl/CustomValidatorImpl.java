@@ -59,8 +59,14 @@ public class CustomValidatorImpl extends ValidatorImpl {
 		Set<ConstraintViolation<T>> violations = Collections.emptySet();
 		Map<String, ConstraintViolation<T>> map = new HashMap<String, ConstraintViolation<T>>();
 		
-		for (Class<?> clazz : groups) {
-			violations = super.validate(object, clazz);
+		for (Class<?> group : groups) {
+			violations = super.validate(object, group);
+			if(group == ConstraintsOrder.Zero.class) { 
+				if(violations.isEmpty())
+					return violations;
+				else 
+					violations.clear();
+			}
 			for(ConstraintViolation<T> violation : violations) {
 				String key = violation.getPropertyPath().toString();
 				if(!map.containsKey(key))

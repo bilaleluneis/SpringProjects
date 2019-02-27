@@ -1,0 +1,23 @@
+<!--/* 
+	@author: Bilal El Uneis (bilaleluneis@gmail.com)
+	@since: Feb 2019
+*/-->
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<title th:text="${title}">Default Title When thymeLeaf property is Empty</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	
+	<body>
+		<form method="post" action="#" th:object="${bean}">
+			<input type="text" th:field="*{name}"/>
+			<span th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+			<button type="submit"> Type Your Name</button>
+			<h4 th:text="*{name}"></h4>
+		</form>
+	</body>
+	
+</html>

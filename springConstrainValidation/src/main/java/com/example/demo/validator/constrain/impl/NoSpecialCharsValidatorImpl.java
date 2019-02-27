@@ -18,8 +18,6 @@ public class NoSpecialCharsValidatorImpl implements ConstraintValidator<NoSpecia
 	}
 
 	@Override
-	public void initialize(NoSpecialChars constraintAnnotation) {
-		
-	}
+	public void initialize(NoSpecialChars constraintAnnotation) {}
 
 }

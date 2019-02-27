@@ -18,6 +18,11 @@ import org.hibernate.validator.internal.util.TypeResolutionHelper;
 import org.hibernate.validator.spi.time.TimeProvider;
 import org.hibernate.validator.spi.valuehandling.ValidatedValueUnwrapper;
 
+/**
+ * @author Bilal El Uneis (bilaleluneis@gmail.com)
+ * @since Feb 2019
+ */
+
 public class CustomValidator implements Validator {
 	
 	private CustomValidatorImpl validator;

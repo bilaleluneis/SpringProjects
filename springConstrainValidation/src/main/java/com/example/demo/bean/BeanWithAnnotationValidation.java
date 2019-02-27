@@ -4,17 +4,22 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
-import com.example.demo.group.sequence.One;
-import com.example.demo.group.sequence.Two;
 import com.example.demo.validator.constrain.NotNullProperty;
+import com.example.demo.validator.impl.ConstraintsOrder.One;
+import com.example.demo.validator.impl.ConstraintsOrder.Two;
 
 /**
  * @author Bilal El Uneis (bilaleluneis@gmail.com)
  * @since Feb 2019
  */
 
-public class BeanWithAnnotationValidation {
+public class BeanWithAnnotationValidation extends BaseBean{
 	
+	@Override
+	public boolean skipValidationCheck() {
+		return true;
+	}
+
 	@NotNullProperty(message="name connot be null", groups=One.class)
 	@Size(min=2, max=15, message="length should be larger than 0 and smaller or equal to 10 characters.", groups=Two.class)
 	private String name;
@@ -28,6 +33,13 @@ public class BeanWithAnnotationValidation {
 	private String height;
 	
 	private String weight;
+	
+	public BeanWithAnnotationValidation() {
+		this.name = "";
+		this.age = "";
+		this.height = "";
+		this.weight = "";
+	}
 	
 	public BeanWithAnnotationValidation(String name, String age, String height, String weight) {
 		this.name = name;

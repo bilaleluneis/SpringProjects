@@ -18,7 +18,6 @@ public class NotEmptyValidatorImpl implements ConstraintValidator<NotEmpty, Stri
 	}
 
 	@Override
-	public void initialize(NotEmpty constraintAnnotation) {		
-	}
+	public void initialize(NotEmpty constraintAnnotation) {}
 
 }

@@ -17,6 +17,7 @@ import org.junit.Test;
 import com.example.demo.bean.BeanWithAnnotationValidation;
 import com.example.demo.group.sequence.One;
 import com.example.demo.group.sequence.Two;
+import com.example.demo.validator.impl.ConstraintsOrder;
 import com.example.demo.validator.provider.impl.CustomValidatorProvider;
 import com.example.demo.validator.provider.resolver.impl.CustomValidationProviderResolver;
 
@@ -33,11 +34,12 @@ public class BeanWithAnnotationValidationTest {
 	@BeforeClass
 	public static void setupOnce() {
 		
-		Configuration<?> config = Validation./*byDefaultProvider()*/byProvider(CustomValidatorProvider.class)
+		Configuration<?> config = Validation.byProvider(CustomValidatorProvider.class)
 											.providerResolver(new CustomValidationProviderResolver())
 											.configure();
 		
-		ValidatorFactory validatorFactory = config.messageInterpolator(new ParameterMessageInterpolator()).buildValidatorFactory();
+		ValidatorFactory validatorFactory = config	.messageInterpolator(new ParameterMessageInterpolator())
+													.buildValidatorFactory();
 		validator = validatorFactory.getValidator();
 		
 	}
@@ -49,7 +51,7 @@ public class BeanWithAnnotationValidationTest {
 		Set<ConstraintViolation<BeanWithAnnotationValidation>> violations;
 		try {
 			
-			violations = validator.validate(bean, new Class<?>[] {One.class, Two.class});
+			violations = validator.validate(bean, ConstraintsOrder.getDefaultConstraints());
 			for(ConstraintViolation<BeanWithAnnotationValidation> violation : violations) {
 				System.out.println(violation.getMessage());
 			}
