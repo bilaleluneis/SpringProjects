@@ -14,14 +14,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.bean.BeanWithAnnotationValidation;
-import com.example.demo.group.sequence.One;
-import com.example.demo.group.sequence.Two;
+import com.example.demo.validator.impl.ConstraintsOrder;
 import com.example.demo.validator.provider.impl.CustomValidatorProvider;
 import com.example.demo.validator.provider.resolver.impl.CustomValidationProviderResolver;
 
@@ -40,7 +38,7 @@ public class MainController {
     }
 	
 	@PostMapping("/input")
-    public String submitForm(	@Validated 
+    public String submitForm(	@Valid 
     							@ModelAttribute("bean")
     							BeanWithAnnotationValidation bean, 
     							BindingResult errors) {
@@ -52,14 +50,33 @@ public class MainController {
 		return "validateInput"; //redirect to current page
 	}
 	
+	/**
+	 * as of now , i have yet to figure out how to get my unit test
+	 * to load the custom validator via config , so I dont have to call
+	 * it manually in controller and just rely on @Valid
+	 */
+	@PostMapping("/unittest")
+	public String submitFormForUnitTest(@ModelAttribute("bean")
+    									BeanWithAnnotationValidation bean, 
+    									BindingResult errors) {
+		this.validate(bean, errors);
+		if(errors.hasErrors()) {
+
+			return "validateInput";
+		}
+		return "validateInput"; //redirect to current page
+		
+	}
+	
 	private void validate(BeanWithAnnotationValidation bean,  BindingResult errors) {
 		
 		Set<ConstraintViolation<BeanWithAnnotationValidation>> violations = null;
-		violations = getValidator().validate(bean, One.class, Two.class);
+		violations = getValidator().validate(bean, ConstraintsOrder.getDefaultConstraints());
 		for(ConstraintViolation<BeanWithAnnotationValidation> violation : violations) {
 			String propertyPath = violation.getPropertyPath().toString();
 	        String message = violation.getMessage();
-	        FieldError fieldError = new FieldError("bean", propertyPath, message);
+	        String constraint = violation.getConstraintDescriptor().getAnnotation().annotationType().getSimpleName();
+	        FieldError fieldError = new FieldError("bean", propertyPath, null, false, new String[] {constraint}, null, message);
 	        errors.addError(fieldError);
 		}
 		

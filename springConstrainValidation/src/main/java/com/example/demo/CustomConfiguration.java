@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
@@ -19,8 +20,9 @@ import com.example.demo.validator.provider.resolver.impl.CustomValidationProvide
  * @since Feb 2019
  */
 
-@EnableWebMvc
 @Configuration
+@EnableWebMvc
+@ComponentScan("com.example.demo")
 public class CustomConfiguration extends WebMvcConfigurerAdapter {
 	
 	@Override

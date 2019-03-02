@@ -54,7 +54,9 @@ public class CustomValidator implements Validator {
 	public <T> Set<ConstraintViolation<T>> validate(T object, Class<?>... groups) {
 		Set<ConstraintViolation<T>> violations = null;
 		try {
-			violations = this.validator.customValidate(object, groups);
+			boolean useDefaultGroup = (groups == null || groups.length == 0);
+			Class<?>[] _groups = useDefaultGroup ? ConstraintsOrder.getDefaultConstraints() : groups;
+			violations = this.validator.customValidate(object, _groups);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

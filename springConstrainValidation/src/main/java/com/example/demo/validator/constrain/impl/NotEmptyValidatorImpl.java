@@ -3,6 +3,8 @@ package com.example.demo.validator.constrain.impl;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+import org.springframework.util.StringUtils;
+
 import com.example.demo.validator.constrain.NotEmpty;
 
 /**
@@ -14,7 +16,7 @@ public class NotEmptyValidatorImpl implements ConstraintValidator<NotEmpty, Stri
 
 	@Override
 	public boolean isValid(String value, ConstraintValidatorContext context) {
-		return (!value.isEmpty() &&value.length() > 0);
+		return !StringUtils.isEmpty(value);
 	}
 
 	@Override

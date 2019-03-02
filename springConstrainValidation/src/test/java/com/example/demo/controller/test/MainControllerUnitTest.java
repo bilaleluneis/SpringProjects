@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.controller.test;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -33,7 +33,7 @@ public class MainControllerUnitTest {
 	
 	@Test
 	public void testReturnedUrlResponse() throws Exception {
-		this.mockMvc.perform(get("/main")).andExpect(view().name("inputPage"));
+		this.mockMvc.perform(get("/input")).andExpect(view().name("validateInput"));
 	}
 	
 	@Test
@@ -43,12 +43,13 @@ public class MainControllerUnitTest {
 		final String propertyNameOnBean = "name";
 		final String noSpecialCharValid = "NoSpecialChars";
 		
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/main")
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/unittest")
 				.accept(MediaType.TEXT_HTML)
-			    .flashAttr(beanName, new BeanWithAnnotationValidation("$duh","","","")))
-			    .andExpect(model().attributeHasFieldErrorCode(beanName, propertyNameOnBean, noSpecialCharValid))
+			    .flashAttr(beanName, new BeanWithAnnotationValidation("$duh","30","175","165")))
+				.andExpect(model().attributeHasErrors(beanName))
 			    .andExpect(model().errorCount(1))
-			    .andExpect(view().name("errorPage"))
+			    .andExpect(model().attributeHasFieldErrorCode(beanName, propertyNameOnBean, noSpecialCharValid))
+			    .andExpect(view().name("validateInput"))
 			    .andExpect(status().isOk())
 			    .andDo(print());
 		

@@ -8,7 +8,6 @@ import java.lang.annotation.Target;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
-import javax.validation.ReportAsSingleViolation;
 
 import com.example.demo.validator.constrain.impl.NotNullPropertyValidatorImpl;
 
@@ -21,7 +20,6 @@ import com.example.demo.validator.constrain.impl.NotNullPropertyValidatorImpl;
 @Constraint(validatedBy = NotNullPropertyValidatorImpl.class)
 @Target({ ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@ReportAsSingleViolation
 public @interface NotNullProperty {
     String message() default "Field cannot be NULL !";
     Class<?>[] groups() default {};

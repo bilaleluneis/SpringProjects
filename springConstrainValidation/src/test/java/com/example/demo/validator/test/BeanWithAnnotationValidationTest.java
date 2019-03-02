@@ -1,4 +1,4 @@
-package com.example.demo.validator;
+package com.example.demo.validator.test;
 
 import static org.junit.Assert.assertTrue;
 
@@ -15,8 +15,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.example.demo.bean.BeanWithAnnotationValidation;
-import com.example.demo.group.sequence.One;
-import com.example.demo.group.sequence.Two;
 import com.example.demo.validator.impl.ConstraintsOrder;
 import com.example.demo.validator.provider.impl.CustomValidatorProvider;
 import com.example.demo.validator.provider.resolver.impl.CustomValidationProviderResolver;
@@ -28,7 +26,6 @@ import com.example.demo.validator.provider.resolver.impl.CustomValidationProvide
 
 public class BeanWithAnnotationValidationTest {
 	
-//	private static final String MESSAGE_BUNDLE = "classpath:errorMessages";
 	private static Validator validator;
 	
 	@BeforeClass
@@ -45,21 +42,63 @@ public class BeanWithAnnotationValidationTest {
 	}
 	
 	@Test
-	public void testNotEmpty() {
+	public void testAllNotEmpty() {
 		
-		BeanWithAnnotationValidation bean = new BeanWithAnnotationValidation("","2999","","50");
+		BeanWithAnnotationValidation bean = new BeanWithAnnotationValidation("name","29","175","165");
 		Set<ConstraintViolation<BeanWithAnnotationValidation>> violations;
 		try {
 			
 			violations = validator.validate(bean, ConstraintsOrder.getDefaultConstraints());
-			for(ConstraintViolation<BeanWithAnnotationValidation> violation : violations) {
-				System.out.println(violation.getMessage());
-			}
 			assertTrue(violations.isEmpty());
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}	
 	}
-
+	
+	@Test
+	public void testNameisEmpty() {
+		BeanWithAnnotationValidation bean = new BeanWithAnnotationValidation("","29","175","165");
+		Set<ConstraintViolation<BeanWithAnnotationValidation>> violations;
+		try {
+			
+			violations = validator.validate(bean);
+			for(ConstraintViolation<BeanWithAnnotationValidation> violation : violations) {
+				System.out.println(violation.getMessage());
+			}
+			assertTrue(!violations.isEmpty() && violations.size() == 1);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
+	
+	@Test
+	public void testInvalidName() {
+		BeanWithAnnotationValidation bean = new BeanWithAnnotationValidation("$duh","30","175","165");
+		Set<ConstraintViolation<BeanWithAnnotationValidation>> violations;
+		try {
+			
+			violations = validator.validate(bean);
+			for(ConstraintViolation<BeanWithAnnotationValidation> violation : violations) {
+				System.out.println(violation.getMessage());
+			}
+			assertTrue(!violations.isEmpty() && 
+						violations.size() == 1 &&
+						violations.stream()	.filter(violation -> violation.getPropertyPath()
+											.toString()
+											.equals("name"))
+											.findAny()
+											.orElse(null) != null &&
+						violations.stream()	.filter(violation -> violation.getConstraintDescriptor()
+											.toString()
+											.contains("NoSpecialChars"))
+											.findAny()
+											.orElse(null) != null);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
+	}
+	
 }

@@ -2,10 +2,11 @@ package com.example.demo.bean;
 
 import javax.validation.constraints.Size;
 
-import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.util.StringUtils;
 
-import com.example.demo.validator.constrain.NotNullProperty;
+import com.example.demo.validator.constrain.NoSpecialChars;
 import com.example.demo.validator.impl.ConstraintsOrder.One;
+import com.example.demo.validator.impl.ConstraintsOrder.Three;
 import com.example.demo.validator.impl.ConstraintsOrder.Two;
 
 /**
@@ -17,18 +18,19 @@ public class BeanWithAnnotationValidation extends BaseBean{
 	
 	@Override
 	public boolean skipValidationCheck() {
-		return true;
+		return StringUtils.isEmpty(name) && StringUtils.isEmpty(age);
 	}
 
-	@NotNullProperty(message="name connot be null", groups=One.class)
+	@com.example.demo.validator.constrain.NotEmpty(message="name connot be null", groups=One.class)
 	@Size(min=2, max=15, message="length should be larger than 0 and smaller or equal to 10 characters.", groups=Two.class)
+	@NoSpecialChars(message= "Special Char not allowed", groups=Three.class)
 	private String name;
 	
-	@NotNullProperty(message="age cannot be empty", groups=One.class)
+	@com.example.demo.validator.constrain.NotEmpty(message="age cannot be empty", groups=One.class)
 	@Size(min=2, max=3, message="age cannot be less than 2 or more than 3 digits", groups=Two.class)
 	private String age;
 	
-	@NotEmpty(message="height is empty", groups=One.class)
+	@com.example.demo.validator.constrain.NotEmpty(message="height is empty", groups=One.class)
 	@Size(min=2, message="hight should be 2 to 3 digits long", groups=Two.class)
 	private String height;
 	
