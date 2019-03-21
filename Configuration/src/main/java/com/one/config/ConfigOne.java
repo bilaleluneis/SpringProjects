@@ -1,5 +1,6 @@
 package com.one.config;
 
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +14,10 @@ import org.springframework.web.servlet.view.JstlView;
  * @since March 2019
  */
 
+//@SpringBootApplication(scanBasePackages="com.one.controller")
 @Configuration
-@ComponentScan(basePackages="com.one")
-@EnableWebMvc
+@ComponentScan(basePackages="com.one.controller")
+//@EnableWebMvc
 public class ConfigOne {
 	
 	@Bean("resolverOne")

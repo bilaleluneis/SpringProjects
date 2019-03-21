@@ -3,11 +3,15 @@ package com.example.first.controller;
 import java.util.Locale;
 
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.ViewResolver;
+
+import com.example.model.Person;
 
 /**
  * @author Bilal El Uneis (bilaleluneis@gmail.com)
@@ -15,12 +19,9 @@ import org.springframework.web.servlet.ViewResolver;
  */
 
 @Controller
-public class ControllerOne {
+public class ControllerOne extends BaseController {
 	
 	private static final Logger log = Logger.getLogger(ControllerOne.class);
-	
-	@Autowired
-	private ViewResolver resolver;
 	
 	@GetMapping("/welcome")
     public String loadForm() throws Exception {
@@ -28,5 +29,17 @@ public class ControllerOne {
 		log.debug(view.toString());
 		return "welcome";
     }
+	
+	@PostMapping("/welcome")
+	public String postForm(	@Validated
+							@ModelAttribute("person") 
+							Person person,
+							BindingResult errors) {
+		if(errors.hasErrors()) {
+			log.error("Validation Failed for postForm()");
+			return "error";
+		}
+		return "welcome";
+	}
 
 }

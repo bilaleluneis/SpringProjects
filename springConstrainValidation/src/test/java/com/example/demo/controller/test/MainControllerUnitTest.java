@@ -49,7 +49,7 @@ public class MainControllerUnitTest {
 				.andExpect(model().attributeHasErrors(beanName))
 			    .andExpect(model().errorCount(1))
 			    .andExpect(model().attributeHasFieldErrorCode(beanName, propertyNameOnBean, noSpecialCharValid))
-			    .andExpect(view().name("validateInput"))
+			    .andExpect(view().name("error"))
 			    .andExpect(status().isOk())
 			    .andDo(print());
 		

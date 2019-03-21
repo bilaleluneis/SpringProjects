@@ -42,13 +42,18 @@ public class ConfigurationApplication extends SpringBootServletInitializer {
 	}
 	
 	public static void main(String[] args) {
-		ApplicationContext context = SpringApplication.run(ConfigurationApplication.class, args);
+		ApplicationContext context = new SpringApplicationBuilder()	
+										.sources(ConfigurationApplication.class)
+										.child(ConfigOne.class)
+										.sibling(ConfigTwo.class)
+										.run(args);
+		//ApplicationContext context = SpringApplication.run(ConfigurationApplication.class, args);
 		//Stream<String> beans = Arrays.stream(context.getBeanDefinitionNames());
 //		beans.filter(bean -> !bean.startsWith("org.springframework"))
 //			 .forEach(bean -> log.info(bean + "bean definition obtained from context!"));
 	}
 	
-	@Bean
+	/*@Bean
 	public ServletRegistrationBean<DispatcherServlet> dispatcherOne() {
 		DispatcherServlet dispatcherServlet = new DispatcherServlet();
 		AnnotationConfigWebApplicationContext contextOne = new AnnotationConfigWebApplicationContext();
@@ -60,7 +65,7 @@ public class ConfigurationApplication extends SpringBootServletInitializer {
 		Stream<String> beans = Arrays.stream(contextOne.getBeanDefinitionNames());
 		beans.forEach(bean -> log.info(bean + "bean definition obtained from context One!"));
 		return servletRegistrationBean;
-	}
+	}*/
 	
 	/*@Bean
 	public ServletRegistrationBean<DispatcherServlet> dispatcherTwo() {
