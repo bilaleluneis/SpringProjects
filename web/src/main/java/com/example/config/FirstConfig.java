@@ -1,14 +1,12 @@
 package com.example.config;
 
-import javax.validation.MessageInterpolator;
 import javax.validation.ValidationProviderResolver;
 
-import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
-import org.hibernate.validator.resourceloading.PlatformResourceBundleLocator;
-import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.ViewResolver;
@@ -30,12 +28,10 @@ public class FirstConfig {
 	@Bean
 	public Validator firstValidator() {
 		ValidationProviderResolver resolver = new CustomValidationProviderResolver();
-		ResourceBundleLocator resourceLocator = new PlatformResourceBundleLocator("classpath:messages");
-		MessageInterpolator messages = new ResourceBundleMessageInterpolator(resourceLocator);
 		LocalValidatorFactoryBean validatorFactory = new LocalValidatorFactoryBean();
 		validatorFactory.setProviderClass(CustomValidatorProvider.class);
 		validatorFactory.setValidationProviderResolver(resolver);
-		validatorFactory.setMessageInterpolator(messages);
+		validatorFactory.setValidationMessageSource(messageSource());
 		return validatorFactory;
 	}
 
@@ -46,6 +42,14 @@ public class FirstConfig {
 		resolver.setSuffix(".jsp");
 		resolver.setViewClass(JstlView.class);
 		return resolver;
+	}
+	
+	@Bean
+	public MessageSource messageSource() {
+	    ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+	    messageSource.setBasename("classpath:messages");
+	    messageSource.setDefaultEncoding("UTF-8");
+	    return messageSource;
 	}
 
 }

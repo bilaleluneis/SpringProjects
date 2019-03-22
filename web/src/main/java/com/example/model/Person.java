@@ -1,5 +1,8 @@
 package com.example.model;
 
+import javax.annotation.PostConstruct;
+
+import org.apache.log4j.Logger;
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.example.validator.ConstraintsOrder.One;
@@ -11,18 +14,27 @@ import com.example.validator.ConstraintsOrder.One;
 
 public class Person {
 	
+	private static final Logger log = Logger.getLogger(Person.class);
+	
 	@NotBlank(message="{error.name.empty}", groups=One.class)
 	private String name;
 	private Integer age;
 	
 	public Person() {
+		log.debug("Person() constructor!");
 		this.name = "";
 		this.age = Integer.valueOf(0);
 	}
 	
 	public Person(String name, int age) {
+		log.debug("Person(name, age) constructor!");
 		this.name = new String(name);
 		this.age = new Integer(age);
+	}
+	
+	@PostConstruct
+	public void init() {
+		log.debug("Person @PostConstruct init()!");
 	}
 	
 	public String getName() {

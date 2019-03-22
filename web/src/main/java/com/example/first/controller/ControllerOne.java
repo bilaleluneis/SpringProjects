@@ -36,7 +36,7 @@ public class ControllerOne extends BaseController {
 							Person person,
 							BindingResult errors) {
 		if(errors.hasErrors()) {
-			log.error("Validation Failed for postForm()");
+			log.error("Validation Failed for postForm() with errors");
 			return "error";
 		}
 		return "welcome";
