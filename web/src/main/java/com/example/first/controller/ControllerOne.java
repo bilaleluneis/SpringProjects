@@ -41,5 +41,20 @@ public class ControllerOne extends BaseController {
 		}
 		return "welcome";
 	}
+	
+	@PostMapping("/next")
+	public String next() {
+		return "welcome";
+	}
+	
+	@PostMapping("/back")
+	public String back() {
+		return "welcome";
+	}
+	
+	@PostMapping("/link")
+	public String link() {
+		return "welcome";
+	}
 
 }
