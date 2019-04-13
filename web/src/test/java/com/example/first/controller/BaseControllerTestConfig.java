@@ -32,6 +32,7 @@ import com.example.config.FirstConfig;
 @Import(FirstConfig.class)
 class TestConfig{}
 
+//bellow annotations will only work with public classes!
 @RunWith(SpringJUnit4ClassRunner.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = {TestConfig.class})
@@ -40,22 +41,22 @@ public abstract class BaseControllerTestConfig {
 	@Autowired 
 	WebApplicationContext ctx;
 	
-	MockMvc mvc;
-	static MockHttpSession session;
-	static MockHttpServletRequest request;
+	@Autowired 
+	MockHttpSession session;
 	
+	@Autowired 
+	MockHttpServletRequest request;
+	
+	MockMvc mvc;
 	final static Logger log = Logger.getLogger(BaseControllerTestConfig.class);
 	
 	@BeforeClass
-	public static void setupOnce() {
-		session = new MockHttpSession();
-		request = new MockHttpServletRequest();
-		request.setSession(session);
-		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-	}
+	public static void setupOnce() {}
 	
 	@Before
 	public void setupBeforeEachTest() {
+		request.setSession(session);
+		RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 		mvc = MockMvcBuilders.webAppContextSetup(ctx).build();
 	}
 	

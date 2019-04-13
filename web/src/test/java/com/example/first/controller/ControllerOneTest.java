@@ -34,6 +34,7 @@ public class ControllerOneTest extends BaseControllerTestConfig {
 	@Test
 	public void testPostForm() throws Exception {
 		mvc	.perform(MockMvcRequestBuilders.post("/welcome")
+			.session(session)
 			.accept(MediaType.TEXT_HTML)
 			.flashAttr(BEAN, new Person("",10)))
 			.andExpect(model().attributeHasErrors(BEAN))
