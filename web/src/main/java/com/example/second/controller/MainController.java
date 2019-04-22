@@ -18,24 +18,24 @@ import com.example.servlet.SecondDispatcherServlet;
 
 @Controller
 @RequestMapping({"/welcome", "/controllerPage*"})
-public class MainController extends BaseController {
+public final class MainController extends BaseController {
+	
+	private MainController() {}
 	
 	@PostMapping(params= {"next"})
-	public View nextPost(	@Validated 
+	protected View nextPost(@Validated 
 							@ModelAttribute(Person.MODEL) 
 							Person person, 
 							BindingResult errors,
-							RedirectAttributes redirect ) {
+							RedirectAttributes redirect) {
 		log.info("In Next button Post Handler Method ...");
-		//session.removeAttribute(ERRORS_MODEL_KEY);
-		Page page = (Page) session.getAttribute(Page.MODEL);
+		Page page = getCurrentPage();
 		RedirectView rv = new RedirectView();
 		rv.setContextRelative(true);
 		rv.setExposeModelAttributes(false);
 		if(errors.hasErrors()) {
 			log.error("Validation Failed on Next Post call before Processing ...");
 			redirect.addFlashAttribute(ERRORS_MODEL_KEY, errors);
-			session.setAttribute(ERRORS_MODEL_KEY, errors);
 			rv.setUrl(SecondDispatcherServlet.ROOT_CONTEXT + "/" + page.getUrl());
 		}else {
 			Integer currentPageId = page.getPageId();
@@ -54,12 +54,12 @@ public class MainController extends BaseController {
 	}
 	
 	@PostMapping(params= {"back"})
-	public View backPost(	@ModelAttribute(Person.MODEL) 
+	protected View backPost(@ModelAttribute(Person.MODEL) 
 							Person person, 
 							BindingResult errors,
-							RedirectAttributes redirect ) {
+							RedirectAttributes redirect) {
 		log.info("In Back button Post Handler Method ...");
-		Page page = (Page) session.getAttribute(Page.MODEL);
+		Page page = getCurrentPage();
 		RedirectView rv = new RedirectView();
 		rv.setContextRelative(true);
 		rv.setExposeModelAttributes(false);
@@ -77,14 +77,14 @@ public class MainController extends BaseController {
 	}
 	
 	@PostMapping(params= {"start"})
-	public View startPost(	@ModelAttribute(Person.MODEL) 
-							Person person, 
-							BindingResult errors,
-							RedirectAttributes redirect, 
-							HttpServletRequest request ) {
+	protected View startPost(	@ModelAttribute(Person.MODEL) 
+								Person person, 
+								BindingResult errors,
+								RedirectAttributes redirect, 
+								HttpServletRequest request ) {
 		log.info("In Start Over button Post Handler Method ...");
 		String urlCurrntlyDisplayed = request.getRequestURL().toString();
-		Page page = (Page) session.getAttribute(Page.MODEL);
+		Page page = getCurrentPage();
 		RedirectView rv = new RedirectView();
 		rv.setContextRelative(true);
 		rv.setExposeModelAttributes(false);

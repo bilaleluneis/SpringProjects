@@ -15,6 +15,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.example.model.Page;
 import com.example.model.Person;
@@ -26,27 +27,27 @@ import com.example.model.Person;
 
 public abstract class BaseController {
 	
-	static final Logger log = Logger.getLogger(BaseController.class);
-	static final String ERRORS_MODEL_KEY = BindingResult.MODEL_KEY_PREFIX + Person.MODEL;
+	protected static final Logger log = Logger.getLogger(BaseController.class);
+	protected static final String ERRORS_MODEL_KEY = BindingResult.MODEL_KEY_PREFIX + Person.MODEL;
 	
 	@Autowired
 	@Qualifier("secondValidator")
-	Validator validator;
+	protected Validator validator;
 	
 	@Autowired
 	@Qualifier("pageMap")
-	Map<Integer, Page> pageMap;
+	protected Map<Integer, Page> pageMap;
 	
 	@Autowired
-	HttpSession session;
+	protected HttpSession session;
 	
 	@InitBinder
-	public void initBinder(WebDataBinder binder) {
+	protected void initBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
 	
 	@ModelAttribute(Person.MODEL)
-	public Person getPerson(Model model) {
+	protected Person getPerson(Model model) {
 		log.info("inside getPerson()");
 		Person person = (Person)model.asMap().get(Person.MODEL);
 		if(person == null) {
@@ -63,24 +64,37 @@ public abstract class BaseController {
 		return person;
 	}
 	
+	protected Page getCurrentPage() {
+		Page currentPage = (Page)session.getAttribute(Page.MODEL);
+		if(currentPage == null)
+			currentPage = pageMap.get(0);
+		return currentPage;
+	}
+	
 	@GetMapping
-	public String loadPage(@ModelAttribute(Person.MODEL) Person person, Model model, HttpServletRequest request) {
+	protected String loadPage(Model model, HttpServletRequest request) {
 		Page page = (Page) session.getAttribute(Page.MODEL);
-		Person local_person = person;
+		Person local_person =  null;
+		BindingResult errors = null;
+		
+		if(RequestContextUtils.getInputFlashMap(request) != null) {
+			local_person = (Person) RequestContextUtils.getInputFlashMap(request).get(Person.MODEL);
+			errors = (BindingResult) RequestContextUtils.getInputFlashMap(request).get(ERRORS_MODEL_KEY);
+		}else 
+			local_person = (Person) session.getAttribute(Person.MODEL);
+		
 		String urlCurrntlyDisplayed = request.getRequestURL().toString();
+		
 		if(page == null || urlCurrntlyDisplayed.contains("/welcome")) {
 			page = pageMap.get(0);
 			local_person = new Person();
 			session.setAttribute(Page.MODEL, page);
 			session.setAttribute(Person.MODEL, local_person);
 		}
-		if(local_person == null || !model.containsAttribute(Person.MODEL)) 
-			local_person = (Person)session.getAttribute(Person.MODEL);
-		if(session.getAttribute(ERRORS_MODEL_KEY) != null) {
-			BindingResult errors = (BindingResult) session.getAttribute(ERRORS_MODEL_KEY);
+		
+		if(errors != null)
 			model.addAttribute(ERRORS_MODEL_KEY, errors);
-			session.removeAttribute(ERRORS_MODEL_KEY);
-		}
+		
 		model.addAttribute(Person.MODEL, local_person);
 		model.addAttribute("controller", page.getUrl());
 		log.info("loadPage() setting url to " + page.getUrl());
