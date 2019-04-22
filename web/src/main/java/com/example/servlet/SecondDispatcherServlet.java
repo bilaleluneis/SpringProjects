@@ -22,21 +22,18 @@ public class SecondDispatcherServlet implements WebApplicationInitializer {
 
 	
 	private static final Logger log = Logger.getLogger(SecondDispatcherServlet.class);
+	public static final String ROOT_CONTEXT = "/second";
 	
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
-		log.debug("INIT Second servlet dispatcher");
+		log.info("INIT Second servlet dispatcher ...");
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
 		context.register(SecondConfig.class);
-		context.refresh();
-		for(String bean : context.getBeanDefinitionNames()) {
-			log.debug(bean + " Obtained from Second dispatcher servlet context !");
-		}
 		DispatcherServlet servlet = new DispatcherServlet(context);
 		ServletRegistration.Dynamic registration = servletContext.addServlet("secondSpringDispatcherServlet", servlet);
 		registration.setLoadOnStartup(1);
-		registration.addMapping("/second/*");
-		
+		registration.addMapping(ROOT_CONTEXT + "/*");
+		log.info("INIT Second servlet dispatcher Completed ...");
 	}
 
 }

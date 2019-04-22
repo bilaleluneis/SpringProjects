@@ -15,6 +15,7 @@ import com.example.validator.ConstraintsOrder.One;
 public class Person {
 	
 	private static final Logger log = Logger.getLogger(Person.class);
+	public static final String MODEL = "personModelToView";
 	
 	@NotBlank(message="{error.name.empty}", groups=One.class)
 	private String name;
