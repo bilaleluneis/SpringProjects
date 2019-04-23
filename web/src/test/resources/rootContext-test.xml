@@ -11,6 +11,6 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context.xsd">
         
-        <bean id="personBean" class="com.example.model.Person"/>
+        <bean id="personBean" class="com.example.model.Person" scope="prototype" lazy-init="true"/>
 	 
 </beans>

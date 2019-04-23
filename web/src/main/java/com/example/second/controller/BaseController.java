@@ -27,44 +27,55 @@ import com.example.model.Person;
 
 public abstract class BaseController {
 	
-	protected static final Logger log = Logger.getLogger(BaseController.class);
-	protected static final String ERRORS_MODEL_KEY = BindingResult.MODEL_KEY_PREFIX + Person.MODEL;
+	static final String ERRORS_MODEL_KEY = BindingResult.MODEL_KEY_PREFIX + Person.MODEL;
+	static final String CONTROLLER_KEY = "controller";
+	Logger log;
+	
+	BaseController(){
+		log = Logger.getLogger(this.getClass());
+		log.info("Instance of " + this.getClass().getSimpleName() + " Created!");
+	}
 	
 	@Autowired
 	@Qualifier("secondValidator")
-	protected Validator validator;
+	Validator validator;
 	
 	@Autowired
 	@Qualifier("pageMap")
-	protected Map<Integer, Page> pageMap;
+	Map<Integer, Page> pageMap;
 	
 	@Autowired
-	protected HttpSession session;
+	HttpSession session;
 	
 	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
+	private void initBinder(WebDataBinder binder) {
 		binder.setValidator(validator);
 	}
 	
 	@ModelAttribute(Person.MODEL)
-	protected Person getPerson(Model model) {
+	private Person getPerson(Model model) {
 		log.info("inside getPerson()");
 		Person person = (Person)model.asMap().get(Person.MODEL);
+		
 		if(person == null) {
 			log.info("person Obtained from Model is empty.. attempt to get from session");
 			person = (Person)session.getAttribute(Person.MODEL);
-		}
+		}else
+			log.info("person Sucessfully Obtained from Model with name property = " + person.getName());
+		
 		if(person ==  null) {
 			log.info("person Obtained from session is empty.. creating new Person()");
 			person = new Person();
-		}
+		}else
+			log.info("person Sucessfully Obtained from session with name property = " + person.getName());
+		
 		model.addAttribute(Person.MODEL, person);
 		session.setAttribute(Person.MODEL, person);
 		log.info("exiting getPerson()");
 		return person;
 	}
 	
-	protected Page getCurrentPage() {
+	Page getCurrentPage() {
 		Page currentPage = (Page)session.getAttribute(Page.MODEL);
 		if(currentPage == null)
 			currentPage = pageMap.get(0);
@@ -72,20 +83,24 @@ public abstract class BaseController {
 	}
 	
 	@GetMapping
-	protected String loadPage(Model model, HttpServletRequest request) {
+	private String loadPage(Model model, HttpServletRequest request) {
 		Page page = (Page) session.getAttribute(Page.MODEL);
 		Person local_person =  null;
 		BindingResult errors = null;
 		
 		if(RequestContextUtils.getInputFlashMap(request) != null) {
+			log.info("loadPage() Flash Attributes Found!");
 			local_person = (Person) RequestContextUtils.getInputFlashMap(request).get(Person.MODEL);
 			errors = (BindingResult) RequestContextUtils.getInputFlashMap(request).get(ERRORS_MODEL_KEY);
-		}else 
+		}else{
+			log.info("loadPage() Flash Attributes not found , pulling from Session!");
 			local_person = (Person) session.getAttribute(Person.MODEL);
+		}
 		
 		String urlCurrntlyDisplayed = request.getRequestURL().toString();
 		
 		if(page == null || urlCurrntlyDisplayed.contains("/welcome")) {
+			log.info("loadPage() url is /welcome .. creating new person and getting page id = 0");
 			page = pageMap.get(0);
 			local_person = new Person();
 			session.setAttribute(Page.MODEL, page);
@@ -96,9 +111,9 @@ public abstract class BaseController {
 			model.addAttribute(ERRORS_MODEL_KEY, errors);
 		
 		model.addAttribute(Person.MODEL, local_person);
-		model.addAttribute("controller", page.getUrl());
-		log.info("loadPage() setting url to " + page.getUrl());
-		log.info("loadPage() forwarding to " + page.getTileName());
+		model.addAttribute(CONTROLLER_KEY, page.getUrl());
+		log.info("loadPage() setting url to /" + page.getUrl());
+		log.info("loadPage() forwarding to Tile = " + page.getTileName());
 		return page.getTileName();
 	}
 	

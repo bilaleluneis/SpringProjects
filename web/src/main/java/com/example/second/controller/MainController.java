@@ -16,18 +16,25 @@ import com.example.model.Page;
 import com.example.model.Person;
 import com.example.servlet.SecondDispatcherServlet;
 
+/**
+ * @author Bilal El Uneis (bilaleluneis@gmail.com)
+ * @since April 2019
+ */
+
 @Controller
 @RequestMapping({"/welcome", "/controllerPage*"})
 public final class MainController extends BaseController {
 	
-	private MainController() {}
+	private MainController() {
+		super();
+	}
 	
 	@PostMapping(params= {"next"})
-	protected View nextPost(@Validated 
-							@ModelAttribute(Person.MODEL) 
-							Person person, 
-							BindingResult errors,
-							RedirectAttributes redirect) {
+	View nextPost(	@Validated 
+					@ModelAttribute(Person.MODEL) 
+					Person person, 
+					BindingResult errors,
+					RedirectAttributes redirect) {
 		log.info("In Next button Post Handler Method ...");
 		Page page = getCurrentPage();
 		RedirectView rv = new RedirectView();
@@ -48,16 +55,16 @@ public final class MainController extends BaseController {
 		}
 		redirect.addFlashAttribute(Person.MODEL, person);
 		session.setAttribute(Person.MODEL, person);
-		log.info("Next button Post Handler Method redirecting to " + page.getUrl());
+		log.info("Next button Post Handler Method redirecting to /" + page.getUrl());
 		log.info("Existing Next button Post Handler Method ...");
 		return rv;
 	}
 	
 	@PostMapping(params= {"back"})
-	protected View backPost(@ModelAttribute(Person.MODEL) 
-							Person person, 
-							BindingResult errors,
-							RedirectAttributes redirect) {
+	View backPost(	@ModelAttribute(Person.MODEL) 
+					Person person, 
+					BindingResult errors,
+					RedirectAttributes redirect) {
 		log.info("In Back button Post Handler Method ...");
 		Page page = getCurrentPage();
 		RedirectView rv = new RedirectView();
@@ -71,18 +78,18 @@ public final class MainController extends BaseController {
 		rv.setUrl(SecondDispatcherServlet.ROOT_CONTEXT + "/" + page.getUrl());
 		redirect.addFlashAttribute(Person.MODEL, person);
 		session.setAttribute(Person.MODEL, person);
-		log.info("Back button Post Handler Method redirecting to " + page.getUrl());
+		log.info("Back button Post Handler Method redirecting to /" + page.getUrl());
 		log.info("Existing Back button Post Handler Method ...");
 		return rv;
 	}
 	
 	@PostMapping(params= {"start"})
-	protected View startPost(	@ModelAttribute(Person.MODEL) 
-								Person person, 
-								BindingResult errors,
-								RedirectAttributes redirect, 
-								HttpServletRequest request ) {
-		log.info("In Start Over button Post Handler Method ...");
+	View startPost(	@ModelAttribute(Person.MODEL) 
+					Person person, 
+					BindingResult errors,
+					RedirectAttributes redirect, 
+					HttpServletRequest request ) {
+		log.info("In Start button Post Handler Method ...");
 		String urlCurrntlyDisplayed = request.getRequestURL().toString();
 		Page page = getCurrentPage();
 		RedirectView rv = new RedirectView();
@@ -94,13 +101,13 @@ public final class MainController extends BaseController {
 			page = pageMap.get(1);
 		else
 			page = pageMap.get(0);
-		log.info("Start Over button Post Handler Method setting page Id to " + page.getPageId());
+		log.info("Start button Post Handler Method setting page Id to " + page.getPageId());
 		session.setAttribute(Page.MODEL, page);
 		rv.setUrl(SecondDispatcherServlet.ROOT_CONTEXT + "/" + page.getUrl());
 		redirect.addFlashAttribute(Person.MODEL, person);
 		session.setAttribute(Person.MODEL, person);
-		log.info("Start Over button Post Handler Method redirecting to " + page.getUrl());
-		log.info("Existing Start Over button Post Handler Method ...");
+		log.info("Start button Post Handler Method redirecting to /" + page.getUrl());
+		log.info("Existing Start button Post Handler Method ...");
 		return rv;
 	}
 
