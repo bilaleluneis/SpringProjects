@@ -29,6 +29,29 @@ public final class MainController extends BaseController {
 		super();
 	}
 	
+	@PostMapping(params= {"saveLink"})
+	View saveLinkPost(	@Validated 
+						@ModelAttribute(Person.MODEL) 
+						Person person, 
+						BindingResult errors,
+						RedirectAttributes redirect) {
+		log.info("In Save Link Post Handler Method ...");
+		Page page = getCurrentPage();
+		RedirectView rv = new RedirectView();
+		rv.setContextRelative(true);
+		rv.setExposeModelAttributes(false);
+		if(errors.hasErrors()) {
+			log.error("Validation Failed on Next Post call before Processing ...");
+			redirect.addFlashAttribute(ERRORS_MODEL_KEY, errors);
+		}
+		redirect.addFlashAttribute(Person.MODEL, person);
+		session.setAttribute(Person.MODEL, person);
+		log.info("Save Link Post Handler Method redirecting to /" + page.getUrl());
+		log.info("Exiting Save Link Post Handler Method ...");
+		rv.setUrl(SecondDispatcherServlet.ROOT_CONTEXT + "/" + page.getUrl());
+		return rv;
+	}
+	
 	@PostMapping(params= {"next"})
 	View nextPost(	@Validated 
 					@ModelAttribute(Person.MODEL) 
@@ -56,7 +79,7 @@ public final class MainController extends BaseController {
 		redirect.addFlashAttribute(Person.MODEL, person);
 		session.setAttribute(Person.MODEL, person);
 		log.info("Next button Post Handler Method redirecting to /" + page.getUrl());
-		log.info("Existing Next button Post Handler Method ...");
+		log.info("Exiting Next button Post Handler Method ...");
 		return rv;
 	}
 	
@@ -79,7 +102,7 @@ public final class MainController extends BaseController {
 		redirect.addFlashAttribute(Person.MODEL, person);
 		session.setAttribute(Person.MODEL, person);
 		log.info("Back button Post Handler Method redirecting to /" + page.getUrl());
-		log.info("Existing Back button Post Handler Method ...");
+		log.info("Exiting Back button Post Handler Method ...");
 		return rv;
 	}
 	
@@ -107,7 +130,7 @@ public final class MainController extends BaseController {
 		redirect.addFlashAttribute(Person.MODEL, person);
 		session.setAttribute(Person.MODEL, person);
 		log.info("Start button Post Handler Method redirecting to /" + page.getUrl());
-		log.info("Existing Start button Post Handler Method ...");
+		log.info("Exiting Start button Post Handler Method ...");
 		return rv;
 	}
 
