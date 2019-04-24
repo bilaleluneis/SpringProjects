@@ -2,7 +2,6 @@ package com.example.second.controller;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -12,10 +11,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
 import com.example.model.Page;
 import com.example.model.Person;
@@ -82,7 +79,7 @@ public abstract class BaseController {
 		return currentPage;
 	}
 	
-	@GetMapping
+	/*@GetMapping
 	private String loadPage(Model model, HttpServletRequest request) {
 		Page page = (Page) session.getAttribute(Page.MODEL);
 		Person local_person =  null;
@@ -115,6 +112,6 @@ public abstract class BaseController {
 		log.info("loadPage() setting url to /" + page.getUrl());
 		log.info("loadPage() forwarding to Tile = " + page.getTileName());
 		return page.getTileName();
-	}
+	}*/
 	
 }

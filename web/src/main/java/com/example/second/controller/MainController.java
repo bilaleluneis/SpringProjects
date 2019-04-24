@@ -21,8 +21,8 @@ import com.example.servlet.SecondDispatcherServlet;
  * @since April 2019
  */
 
-@Controller
-@RequestMapping({"/welcome", "/controllerPage*"})
+//@Controller
+//@RequestMapping({"/welcome", "/controllerPage*"})
 public final class MainController extends BaseController {
 	
 	private MainController() {
