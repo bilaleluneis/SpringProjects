@@ -4,8 +4,7 @@ import javax.validation.ValidatorFactory;
 import javax.validation.spi.ConfigurationState;
 
 import org.hibernate.validator.HibernateValidator;
-
-import com.example.demo.validator.factory.impl.CustomValidatorFactoryImpl;
+import org.hibernate.validator.internal.engine.CustomValidatorFactoryImpl;
 
 /**
  * @author Bilal El Uneis (bilaleluneis@gmail.com)

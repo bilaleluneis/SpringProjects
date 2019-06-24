@@ -1,22 +1,20 @@
-package com.example.demo.validator.impl;
+package org.hibernate.validator.internal.engine;
 
-import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintValidatorFactory;
 import javax.validation.ConstraintViolation;
-import javax.validation.MessageInterpolator;
-import javax.validation.ParameterNameProvider;
-import javax.validation.TraversableResolver;
 import javax.validation.Validator;
 import javax.validation.executable.ExecutableValidator;
 import javax.validation.metadata.BeanDescriptor;
 
+import org.hibernate.validator.internal.engine.ValidatorFactoryImpl.ValidatorFactoryScopedContext;
 import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorManager;
+import org.hibernate.validator.internal.engine.groups.ValidationOrderGenerator;
+import org.hibernate.validator.internal.engine.valueextraction.ValueExtractorManager;
 import org.hibernate.validator.internal.metadata.BeanMetaDataManager;
-import org.hibernate.validator.internal.util.TypeResolutionHelper;
-import org.hibernate.validator.spi.time.TimeProvider;
-import org.hibernate.validator.spi.valuehandling.ValidatedValueUnwrapper;
+
+import com.example.demo.validator.impl.ConstraintsOrder;
 
 /**
  * @author Bilal El Uneis (bilaleluneis@gmail.com)
@@ -28,28 +26,21 @@ public class CustomValidator implements Validator {
 	private CustomValidatorImpl validator;
 	
 	public CustomValidator(	ConstraintValidatorFactory constraintValidatorFactory,
-							MessageInterpolator messageInterpolator,
-							TraversableResolver traversableResolver,
 							BeanMetaDataManager beanMetaDataManager,
-							ParameterNameProvider parameterNameProvider,
-							TimeProvider timeProvider,
-							TypeResolutionHelper typeResolutionHelper,
-							List<ValidatedValueUnwrapper<?>> validatedValueHandlers,
+							ValueExtractorManager valueExtractorManager,
 							ConstraintValidatorManager constraintValidatorManager,
-							boolean failFast) {
-		
-		this.validator = new CustomValidatorImpl(  	constraintValidatorFactory, 
-													messageInterpolator, 
-													traversableResolver, 
-													beanMetaDataManager, 
-													parameterNameProvider, 
-													timeProvider, 
-													typeResolutionHelper, 
-													validatedValueHandlers, 
-													constraintValidatorManager, 
-													failFast );
-	}
+							ValidationOrderGenerator validationOrderGenerator,
+							ValidatorFactoryScopedContext validatorFactoryScopedContext ) {
 
+		this.validator = new CustomValidatorImpl(	constraintValidatorFactory, 
+													beanMetaDataManager, 
+													valueExtractorManager, 
+													constraintValidatorManager,
+													validationOrderGenerator, 
+													validatorFactoryScopedContext	);
+		
+	}
+	
 	@Override
 	public <T> Set<ConstraintViolation<T>> validate(T object, Class<?>... groups) {
 		Set<ConstraintViolation<T>> violations = null;
