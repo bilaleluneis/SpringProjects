@@ -10,10 +10,11 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
-import org.apache.log4j.Logger;
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.example.demo.bean.BeanWithAnnotationValidation;
 import com.example.demo.validator.impl.ConstraintsOrder;
@@ -27,7 +28,7 @@ import com.example.demo.validator.provider.resolver.impl.CustomValidationProvide
 
 public class BeanWithAnnotationValidationTest {
 	
-	private static final Logger log = Logger.getLogger(BeanWithAnnotationValidationTest.class);
+	private static final Logger log = LoggerFactory.getLogger(BeanWithAnnotationValidationTest.class);
 	private static Validator validator;
 	
 	@BeforeClass
