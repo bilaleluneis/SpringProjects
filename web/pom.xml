@@ -11,7 +11,7 @@
   <properties>
   	<maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
-	<spring.version>5.0.10.RELEASE</spring.version>
+	<spring.version>5.2.7.RELEASE</spring.version>
 	<apachetiles.version>3.0.8</apachetiles.version>
 	<apachetiles-request.version>1.0.7</apachetiles-request.version>
   </properties>
